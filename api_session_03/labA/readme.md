@@ -1,3 +1,4 @@
+<pre>
 1. Xác định các Resources trong miền (Domain Resources)
     Dựa vào mô tả bài toán, các danh từ chính (resources) trong hệ thống gồm:   
     users: Người dùng / Tác giả.   
@@ -45,6 +46,7 @@ Sử dụng Version segment /api/v1 ở gốc:
 
 
 4. Triển khai Flask Routes cho Collection (trong file app.py)
+    <pre>
 
 
 
