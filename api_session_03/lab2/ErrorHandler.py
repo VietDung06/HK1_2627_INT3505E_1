@@ -2,6 +2,7 @@ import logging
 from flask import Flask, jsonify, request
 from werkzeug.exceptions import HTTPException
 
+
 logger = logging.getLogger(__name__)
 
 class ProblemError(Exception):
