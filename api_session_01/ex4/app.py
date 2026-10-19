@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
-# Dữ liệu giả lập
 BOOKS = [
     {"id": "abc-1234", "t": "Python Basics"},
     {"id": "def-5678", "t": "Advanced Python"},
@@ -17,7 +16,6 @@ def find_by_id(book_id):
     return None
 
 
-# --- 1. PATH PARAMS (Biến bắt buộc trong URL) ---
 @app.route("/books/<book_id>", methods=["GET"])
 def get_book(book_id):
     book = find_by_id(book_id)
@@ -31,7 +29,6 @@ def get_item(item_id):
     return jsonify({"id": item_id}), 200
 
 
-# --- 2. QUERY STRING (Bộ lọc tuỳ chọn) ---
 @app.route("/books", methods=["GET"])
 def list_books():
     limit = int(request.args.get("limit", 20))

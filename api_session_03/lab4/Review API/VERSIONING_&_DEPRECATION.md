@@ -1,3 +1,4 @@
+<pre>
 09: VERSIONING & DEPRECATION
 
 A. Kiến thức bài học
@@ -39,3 +40,4 @@ C. KẾT LUẬN VỀ MẶT HẠN CHẾ TRONG TIÊU CHÍ 09 CỦA DISCORD API:
         +Discord chỉ hỗ trợ duy nhất Path Versioning (/api/v10/users). Thiếu sự hỗ trợ cho Header-based Versioning (ví dụ: Accept-Version hoặc X-API-Version), điều này ép buộc lập trình viên phải thay đổi cứng URL ở mọi endpoint khi nâng cấp phiên bản.
 
         +Khi một endpoint hoặc một field cụ thể chuẩn bị bị loại bỏ (Deprecate), Discord chủ yếu đưa thông tin lên trang Documentation thay vì trả về HTTP Header Sunset hoặc Deprecation chuẩn RFC trực tiếp trong API response. Điều này khiến lập trình viên khó tự động hóa việc bắt cảnh báo ứng dụng đang dùng tính năng sắp bị khai tử thông qua log của ứng dụng.
+<pre>

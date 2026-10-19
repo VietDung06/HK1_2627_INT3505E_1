@@ -1,3 +1,4 @@
+<pre>
 08: AUTHENTICATION & SECURITY 
 
 A. Kiến thức bài học
@@ -37,4 +38,5 @@ B. Phân tích & Đánh giá Discord REST API
 C. KẾT LUẬN VỀ MẶT HẠN CHẾ TRONG TIÊU CHÍ 08 CỦA DISCORD API:
 
     -Kết luận: Thiếu Idempotency Key cho các tác vụ quan trọng (Write Actions): Mặc dù bảo mật xác thực và rate-limit rất tốt, Discord API thiếu cơ chế Idempotency-Key header cho các phương thức POST hoặc PATCH tạo/thực hiện giao dịch (ví dụ: gửi tin nhắn, mua quà tặng/nitro, mua Sticker). Khi gặp sự cố chập chờn mạng làm request retry tự động, việc thiếu Idempotency Key khiến bot hoặc ứng dụng dễ gặp tình trạng gửi trùng tin nhắn nhiều lần hoặc thực hiện hành động dư thừa trên hệ thống.
+<pre>
 
