@@ -1,0 +1,13 @@
+def test_product_post(client):
+    # Soft test, only check for successful status code and not content.
+    payload = {
+        "id": 1,
+        "sku": "book/lea",
+        "name": "Leather Notebook",
+        "description": "Placeholder text.",
+        "price_cents": 100,
+        "qty_in_stock": 100,
+        "archived": False
+    }
+    response = client.post("/products", json=payload)
+    assert response.status_code == 201
