@@ -11,7 +11,7 @@ from flask import Flask, jsonify, request
 from marshmallow import Schema, ValidationError, fields, validate
 from sqlalchemy.exc import IntegrityError
 
-from models import Book, db
+from api_session_08.lab1.models import Book, db
 
 
 class BookInput(Schema):

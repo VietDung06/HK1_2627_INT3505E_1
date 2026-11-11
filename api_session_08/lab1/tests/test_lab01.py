@@ -76,7 +76,7 @@ BOOK_SCHEMA = {
 }
 
 def test_response_extra_field_blocked(client, app):
-    from models import db, Book
+    from api_session_08.lab1.models import db, Book
 
     # Giả lập thêm một field lạ/nhạy cảm (ví dụ: password_hash) vào CSDL
     with app.app_context():

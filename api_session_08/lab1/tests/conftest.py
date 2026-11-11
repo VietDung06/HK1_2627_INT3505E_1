@@ -1,7 +1,7 @@
 """Shared fixtures for all exercises; each test receives a fresh SQLite database."""
 import pytest
-from app import create_app
-from models import Book, db
+from api_session_08.lab1.app import create_app
+from api_session_08.lab1.models import Book, db
 
 
 @pytest.fixture()

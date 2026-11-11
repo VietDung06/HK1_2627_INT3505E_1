@@ -1,0 +1,15 @@
+extends: [[spectral:oas, recommended]]
+
+rules:
+  # Custom Rule: Đảm bảo Response 200 luôn định nghĩa schema có properties (nhiều hơn 0 trường)
+  response-200-must-have-properties:
+    description: "Response status 200 OK phải định nghĩa schema chứa các trường dữ liệu (properties)."
+    given: "$.paths..responses['200'].content['application/json'].schema[?(@.type == 'object')]"
+    severity: warn
+    then:
+      field: "properties"
+      function: defined
+
+> **Giải thích Custom Rule cho báo cáo/nộp bài:**[cite: 16, 38]
+> * **Tên rule:** `response-200-must-have-properties`[cite: 16, 38]
+> * **Mục đích (Catch case):** Ngăn chặn việc khai báo response `200 OK` sơ sài bằng kiểu `object` rỗng mà không định nghĩa các trường dữ liệu trả về (`properties`). Rule này bắt buộc mọi API trả về 200 phải mô tả rõ các thuộc tính JSON cụ thể.
