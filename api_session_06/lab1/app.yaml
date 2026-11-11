@@ -1,0 +1,174 @@
+openapi: 3.0.3
+info:
+  title: Social Network API - Auth & Posts
+  version: 1.0.0
+  description: API xác thực và quản lý bài viết cho ứng dụng mạng xã hội.
+
+paths:
+  /auth/login:
+    post:
+      summary: Đăng nhập hệ thống
+      description: Xác thực người dùng bằng email và password, trả về Access Token và Refresh Token.
+      security: [] # Public endpoint, không yêu cầu Bearer token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "user@example.com"
+                password:
+                  type: string
+                  format: password
+                  example: "MySecureP@ssw0rd!"
+      responses:
+        '200':
+          description: Đăng nhập thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  refresh_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  token_type:
+                    type: string
+                    example: "Bearer"
+                  expires_in:
+                    type: integer
+                    example: 900
+        '400':
+          description: Lỗi dữ liệu đầu vào không hợp lệ (Dữ liệu thiếu/sai định dạng)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Lỗi xác thực (Email hoặc mật khẩu không chính xác)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Quá nhiều yêu cầu (Vượt rate-limit đăng nhập)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/refresh:
+    post:
+      summary: Cấp lại Access Token
+      description: Dùng Refresh Token còn hiệu lực để cấp Access Token mới.
+      security:
+        - BearerAuth: [] # Yêu cầu Refresh Token truyền qua Header Authorization
+      responses:
+        '200':
+          description: Cấp Access Token mới thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  token_type:
+                    type: string
+                    example: "Bearer"
+                  expires_in:
+                    type: integer
+                    example: 900
+        '401':
+          description: Lỗi xác thực (Refresh Token hết hạn, bị vô hiệu/blocklist hoặc không hợp lệ)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /posts/{id}:
+    get:
+      summary: Lấy thông tin bài viết theo ID
+      description: Truy xuất nội dung bài viết. Yêu cầu Scope `posts:read`.
+      security:
+        - OAuth2Scopes:
+            - "posts:read"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID của bài viết
+          schema:
+            type: integer
+            example: 101
+      responses:
+        '200':
+          description: Thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 101
+                  author_id:
+                    type: integer
+                    example: 42
+                  content:
+                    type: string
+                    example: "Hello world!"
+                  created_at:
+                    type: string
+                    format: date-time
+        '401':
+          description: Chưa đăng nhập hoặc Access Token không hợp lệ/hết hạn
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Không có quyền truy cập (Thiếu scope `posts:read` hoặc vi phạm BOLA/quyền xem bài viết riêng tư)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Không tìm thấy bài viết
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Scopes:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "unauthorized"
+        message:
+          type: string
+          example: "Invalid credentials or missing token."
