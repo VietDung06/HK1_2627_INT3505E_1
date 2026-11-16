@@ -80,6 +80,16 @@ newman run books-api.postman_collection.json \
   -r cli,junit --reporter-junit-export reports/junit.xml
 ```
 
+Trên Windows PowerShell, dùng chuỗi reporter được quote để Newman nhận đủ cả
+hai reporter:
+
+```powershell
+New-Item -ItemType Directory -Force reports | Out-Null
+newman run books-api.postman_collection.json `
+  -e postman/local.postman_environment.json `
+  --reporters "cli,junit" --reporter-junit-export reports/junit.xml
+```
+
 Lưu ý: cần chạy server trước. `data.csv` là dữ liệu ví dụ để thực hành data-driven iteration; khi sử dụng `-d data.csv`, collection sẽ lặp theo số hàng. Đừng hard-code credentials/tokens trong file đẩy lên Git.
 
 ## 5. Lab 4 — Locust
