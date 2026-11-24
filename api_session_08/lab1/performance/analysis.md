@@ -11,7 +11,7 @@
     Khi tăng lên 200 users, throughput tăng lên 93.38 RPS nhưng CPU/SQLite và Flask
     development server phải xử lý nhiều request đồng thời hơn, làm hàng đợi và
     tail latency tăng.
-    
+
 2.Endpoint nào fail rate tăng theo user? Nguyên nhân?
     `GET /books?year={year}` có failure rate cao nhất theo endpoint: 0.94% ở B
     (2/213) và 0.77% ở C (3/390). Đây là các lỗi **client-side** do Locust chủ
@@ -32,5 +32,3 @@ Bonus: Pool size = 5 thì 200 user đồng thời bị gì? Test bằng Locust t
     connection pool thay vì nhầm với lỗi ứng dụng. Có thể chạy thêm các mức
     pool 5, 20 và mặc định, lặp mỗi kịch bản ít nhất 3 lần rồi lấy median/p95.
 
-> Không điền số liệu giả định vào bảng. Không khẳng định hiệu năng production
-> từ SQLite + Flask development server trên máy cá nhân.
